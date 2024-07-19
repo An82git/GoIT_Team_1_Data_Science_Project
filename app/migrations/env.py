@@ -8,6 +8,7 @@ from app.db import Base
 from app.settings import settings
 import users.models
 import license_plates.models
+import paymets.models
 
 from alembic import context
 
