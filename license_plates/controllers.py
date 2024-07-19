@@ -1,3 +1,4 @@
+from fastapi import UploadFile
 from datetime import datetime, UTC
 from typing import List
 from sqlalchemy import or_
@@ -40,11 +41,11 @@ class LicensePlateController:
          db.commit()
          return plate
     
-    async def read_visits(self, plate: LicensePlate, user: User, db: Session) -> List[Visit]:
+    async def read_visits(self, plate: LicensePlate, db: Session) -> List[Visit]:
         return db.query(Visit).filter(Visit.license_plate == plate).all()
     
-    async def handle_visit(self, body: schemas.VisitCreate, db: Session, user: User) -> Visit:
-        plate_number = body.plate or body.photo # тут потрібно буде витягнути номерний знак з фото
+    async def handle_visit(self, photo: UploadFile | None, plate: str | None, db: Session, user: User) -> Visit:
+        plate_number = plate or photo # тут потрібно буде витягнути номерний знак з фото
         plate = await self.read(plate_number, db)
         if plate is None:
             raise PlateNotFoundException

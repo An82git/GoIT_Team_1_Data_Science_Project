@@ -1,5 +1,5 @@
-from typing import List
-from fastapi import APIRouter, Depends, status, HTTPException, UploadFile
+from typing import List, Optional
+from fastapi import APIRouter, Depends, status, HTTPException, File, Form, UploadFile
 from license_plates import schemas
 from app.db import DBConnectionDep
 from license_plates.dependencies import LicensePlateControllerDep, LicensePlateDep, UserLicensePlateDep
@@ -31,11 +31,11 @@ async def read_visits(db: DBConnectionDep, controller: LicensePlateControllerDep
     return await controller.read_visits(plate, db)
 
 @visit_router.post('/', response_model=schemas.VisitResponse, status_code=status.HTTP_201_CREATED)
-async def handle_visit(photo: UploadFile, body: schemas.VisitCreate, db: DBConnectionDep, controller: LicensePlateControllerDep, user: AuthDep):
-    if body.plate is None and body.photo is None:
+async def handle_visit(db: DBConnectionDep, controller: LicensePlateControllerDep, user: AuthDep, photo: UploadFile, plate: Optional[str] = Form(None)):
+    if plate is None and photo is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Please send photo or license plate')
     try:
-        return await controller.handle_visit(body, db, user)
+        return await controller.handle_visit(photo, plate, db, user)
     except PlateNotFoundException:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Plate not found. Please register it.')
     
