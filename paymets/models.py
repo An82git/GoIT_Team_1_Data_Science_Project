@@ -10,10 +10,10 @@ if TYPE_CHECKING:
 class Price(Base, TimestampsMixin):
     __tablename__ = "prices"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    hours: Mapped[int] = mapped_column(Integer)
+    hours: Mapped[int] = mapped_column(Integer, unique=True)
     price: Mapped[float] = mapped_column(Float)
 
-class Payments(Base, TimestampsMixin):
+class Payment(Base, TimestampsMixin):
     __tablename__ = "payments"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     visit_id: Mapped[int] = mapped_column(Integer, ForeignKey('visits.id', ondelete="CASCADE"))

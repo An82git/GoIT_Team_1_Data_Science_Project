@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from license_plates import schemas
 from license_plates.models import LicensePlate, Visit
 from users.models import User
+from paymets.controllers import PaymentsController
 
 class PlateNotFoundException(Exception):
     pass
@@ -45,14 +46,15 @@ class LicensePlateController:
         return db.query(Visit).filter(Visit.license_plate == plate).all()
     
     async def handle_visit(self, photo: UploadFile | None, plate: str | None, db: Session, user: User) -> Visit:
-        plate_number = plate or photo # тут потрібно буде витягнути номерний знак з фото
+        plate_number = plate #or photo # тут потрібно буде витягнути номерний знак з фото
         plate = await self.read(plate_number, db)
         if plate is None:
             raise PlateNotFoundException
         visit = db.query(Visit).filter(Visit.license_plate == plate, Visit.out_at == None).first()
         if visit:
+            payment_controller = PaymentsController()
             visit.out_at = datetime.now(UTC)
-            # створення рахунку і відправка його на емейл 1 або 2 користувачам
+            payment_controller.create_payment(visit, db, user)
         else:
             visit = Visit(license_plate=plate)
             db.add(visit)

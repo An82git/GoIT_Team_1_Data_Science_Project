@@ -1,6 +1,5 @@
-from fastapi_mail import MessageSchema
 from app.services.mail import SendMail
 
-class ConfirmationEmail(SendMail):
+class PaymentEmail(SendMail):
     subject = 'Будь-ласка, оплатіть Ваш рахунок за стоянку'
-    template = "confirm_email.html"
+    template = "payment_email.html"

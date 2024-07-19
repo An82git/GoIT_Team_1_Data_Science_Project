@@ -2,7 +2,6 @@ from typing import List, Optional
 from datetime import datetime, UTC
 from typing import Optional
 from pydantic import Field, BaseModel
-from fastapi import Form
 
 class LicensePlate(BaseModel):
     model: str = Field(min_length=5, max_length=255)
