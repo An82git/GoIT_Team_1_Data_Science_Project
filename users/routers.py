@@ -57,7 +57,7 @@ async def users_list(controller: UsersControllerDep, db: DBConnectionDep):
 async def read_user_by_name_or_id(user: UserDep):
     return user
 
-@user_router.post("/{user_ident}/license_plate", response_model=license_plates_schemas.LicensePlateResponse, dependencies=[Depends(auth.role_in(UserRoles.ADMIN.value))], status_code=status.HTTP_201_CREATED)
+@user_router.post("/{user_ident}/license_plate", response_model=license_plates_schemas.LicensePlateResponse, dependencies=[Depends(auth.role_in([UserRoles.ADMIN.value]))], status_code=status.HTTP_201_CREATED)
 async def create_license_plate(body: license_plates_schemas.LicensePlate, db: DBConnectionDep, controller: LicensePlateControllerDep, user: UserDep):
     plate = controller.read(body.number, db)
     if plate:
