@@ -2,7 +2,6 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 from pathlib import Path
 import os
-import cloudinary
 
 load_dotenv(override=True)
 
@@ -26,7 +25,7 @@ class TokenSettings(BaseModel):
     BLACK_LIST_PREFIX: str = "INVALID_ACCESS_TOKEN_"
 
 class AppSettings(BaseModel):
-    NAME: str = "PhotoShopper"
+    NAME: str = "DSApp"
     VERSION: str = '0.1.0'
     HOST: str = os.getenv("APP_HOST")
     PORT: int = int(os.getenv("APP_PORT"))
@@ -42,9 +41,6 @@ class AppSettings(BaseModel):
     @property
     def LOGIN_URL(self) -> str:
         return f"{self.BASE_URL_PREFIX}/session"
-    
-class PhotoSettings(BaseModel):
-    MAX_TAGS: int = 5
 
 class RedisSettings(BaseModel):
     PORT: int = int(os.getenv("REDIS_PORT"))
@@ -52,20 +48,18 @@ class RedisSettings(BaseModel):
     DB: int = 0
     ENCODING: str = 'utf-8'
 
-class CloudinarySettings(BaseModel):
-    CLOUD_NAME: str = os.getenv("CLOUD_NAME")
-    CLOUD_API_KEY: str = os.getenv("CLOUD_API_KEY")
-    CLOUD_API_SECRET: str = os.getenv("CLOUD_API_SECRET")
-
-
+class MailSettings(BaseModel):
+    SERVER: str = os.getenv("SMTP_SERVER")
+    USER: str = os.getenv("SMTP_EMAIL")
+    PASSWORD: str = os.getenv("SMTP_PASSWORD")
+    PORT: int = int(os.getenv("SMTP_PORT"))
 
 class Settings(BaseModel):
     app: AppSettings = AppSettings()
     db: DBSettings = DBSettings()
     token: TokenSettings = TokenSettings()
-    photo: PhotoSettings = PhotoSettings()
     redis: RedisSettings = RedisSettings()
-    cloudinary: CloudinarySettings = CloudinarySettings()
+    mail: MailSettings = MailSettings()
 
 settings = Settings()
 

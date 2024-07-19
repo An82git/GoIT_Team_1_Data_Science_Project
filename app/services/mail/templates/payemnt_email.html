@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рахунок за стоянку.</title>
+</head>
+<body>
+    <p>Доброго дня, {{ username }}!</p>
+    <p>Повідомляємо Вам, що Ваша машина {{ car }}, номерний знак {{ license_plate }}, з {{ date_from }} по {{ date_to }}, знаходилась у нас на стоянці.</p>
+    <p>У зв'язку з цим просимо оплатити Вас <a href="{{host}}api/payments/pay/{{payment_id}}">рахунок за стоянку</a>.</p>
+</body>
+</html>

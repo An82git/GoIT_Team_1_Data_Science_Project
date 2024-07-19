@@ -12,6 +12,21 @@ files = [
 ]
 
 [[package]]
+name = "aiosmtplib"
+version = "2.0.2"
+description = "asyncio SMTP client"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "aiosmtplib-2.0.2-py3-none-any.whl", hash = "sha256:1e631a7a3936d3e11c6a144fb8ffd94bb4a99b714f2cb433e825d88b698e37bc"},
+    {file = "aiosmtplib-2.0.2.tar.gz", hash = "sha256:138599a3227605d29a9081b646415e9e793796ca05322a78f69179f0135016a3"},
+]
+
+[package.extras]
+docs = ["sphinx (>=5.3.0,<6.0.0)", "sphinx_autodoc_typehints (>=1.7.0,<2.0.0)"]
+uvloop = ["uvloop (>=0.14,<0.15)", "uvloop (>=0.14,<0.15)", "uvloop (>=0.17,<0.18)"]
+
+[[package]]
 name = "alembic"
 version = "1.13.1"
 description = "A database migration tool for SQLAlchemy."
@@ -105,6 +120,17 @@ files = [
 [package.extras]
 tests = ["pytest (>=3.2.1,!=3.3.0)"]
 typecheck = ["mypy"]
+
+[[package]]
+name = "blinker"
+version = "1.8.2"
+description = "Fast, simple object-to-object and broadcast signaling"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "blinker-1.8.2-py3-none-any.whl", hash = "sha256:1779309f71bf239144b9399d06ae925637cf6634cf6bd131104184531bf67c01"},
+    {file = "blinker-1.8.2.tar.gz", hash = "sha256:8f77b09d3bf7c795e969e9486f39c2c5e9c39d4ee07424be2bc594ece9642d83"},
+]
 
 [[package]]
 name = "certifi"
@@ -231,24 +257,6 @@ files = [
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
-name = "cloudinary"
-version = "1.39.1"
-description = "Python and Django SDK for Cloudinary"
-optional = false
-python-versions = "*"
-files = [
-    {file = "cloudinary-1.39.1.tar.gz", hash = "sha256:922467259045ffdd81713b5ed2bc48f1d70f7f3e9812b8b0c206e99d665ed161"},
-]
-
-[package.dependencies]
-certifi = "*"
-six = "*"
-urllib3 = ">=1.26.5"
-
-[package.extras]
-dev = ["tox"]
-
-[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -345,6 +353,30 @@ typing-extensions = ">=4.8.0"
 
 [package.extras]
 all = ["email-validator (>=2.0.0)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)", "jinja2 (>=2.11.2)", "orjson (>=3.2.1)", "pydantic-extra-types (>=2.0.0)", "pydantic-settings (>=2.0.0)", "python-multipart (>=0.0.5)", "pyyaml (>=5.3.1)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0)", "uvicorn[standard] (>=0.12.0)"]
+
+[[package]]
+name = "fastapi-mail"
+version = "1.4.1"
+description = "Simple lightweight mail library for FastApi"
+optional = false
+python-versions = ">=3.8.1,<4.0"
+files = [
+    {file = "fastapi_mail-1.4.1-py3-none-any.whl", hash = "sha256:fa5ef23b2dea4d3ba4587f4bbb53f8f15274124998fb4e40629b3b636c76c398"},
+    {file = "fastapi_mail-1.4.1.tar.gz", hash = "sha256:9095b713bd9d3abb02fe6d7abb637502aaf680b52e177d60f96273ef6bc8bb70"},
+]
+
+[package.dependencies]
+aiosmtplib = ">=2.0,<3.0"
+blinker = ">=1.5,<2.0"
+email-validator = ">=2.0,<3.0"
+Jinja2 = ">=3.0,<4.0"
+pydantic = ">=2.0,<3.0"
+pydantic_settings = ">=2.0,<3.0"
+starlette = ">=0.24,<1.0"
+
+[package.extras]
+httpx = ["httpx[httpx] (>=0.23,<0.24)"]
+redis = ["redis[redis] (>=4.3,<5.0)"]
 
 [[package]]
 name = "greenlet"
@@ -494,6 +526,23 @@ files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
 ]
+
+[[package]]
+name = "jinja2"
+version = "3.1.4"
+description = "A very fast and expressive template engine."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "jinja2-3.1.4-py3-none-any.whl", hash = "sha256:bc5dd2abb727a5319567b7a813e6a2e7318c39f4f487cfe6c89c6f9c7d25197d"},
+    {file = "jinja2-3.1.4.tar.gz", hash = "sha256:4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369"},
+]
+
+[package.dependencies]
+MarkupSafe = ">=2.0"
+
+[package.extras]
+i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "mako"
@@ -771,15 +820,23 @@ files = [
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
 [[package]]
-name = "pypng"
-version = "0.20220715.0"
-description = "Pure Python library for saving and loading PNG images"
+name = "pydantic-settings"
+version = "2.2.1"
+description = "Settings management using Pydantic"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 files = [
-    {file = "pypng-0.20220715.0-py3-none-any.whl", hash = "sha256:4a43e969b8f5aaafb2a415536c1a8ec7e341cd6a3f957fd5b5f32a4cfeed902c"},
-    {file = "pypng-0.20220715.0.tar.gz", hash = "sha256:739c433ba96f078315de54c0db975aee537cbc3e1d0ae4ed9aab0ca1e427e2c1"},
+    {file = "pydantic_settings-2.2.1-py3-none-any.whl", hash = "sha256:0235391d26db4d2190cb9b31051c4b46882d28a51533f97440867f012d4da091"},
+    {file = "pydantic_settings-2.2.1.tar.gz", hash = "sha256:00b9f6a5e95553590434c0fa01ead0b216c3e10bc54ae02e37f359948643c5ed"},
 ]
+
+[package.dependencies]
+pydantic = ">=2.3.0"
+python-dotenv = ">=0.21.0"
+
+[package.extras]
+toml = ["tomli (>=2.0.1)"]
+yaml = ["pyyaml (>=6.0.1)"]
 
 [[package]]
 name = "pytest"
@@ -881,29 +938,6 @@ files = [
 
 [package.extras]
 dev = ["atomicwrites (==1.4.1)", "attrs (==23.2.0)", "coverage (==7.4.1)", "hatch", "invoke (==2.2.0)", "more-itertools (==10.2.0)", "pbr (==6.0.0)", "pluggy (==1.4.0)", "py (==1.11.0)", "pytest (==8.0.0)", "pytest-cov (==4.1.0)", "pytest-timeout (==2.2.0)", "pyyaml (==6.0.1)", "ruff (==0.2.1)"]
-
-[[package]]
-name = "qrcode"
-version = "7.4.2"
-description = "QR Code image generator"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "qrcode-7.4.2-py3-none-any.whl", hash = "sha256:581dca7a029bcb2deef5d01068e39093e80ef00b4a61098a2182eac59d01643a"},
-    {file = "qrcode-7.4.2.tar.gz", hash = "sha256:9dd969454827e127dbd93696b20747239e6d540e082937c90f14ac95b30f5845"},
-]
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-pypng = "*"
-typing-extensions = "*"
-
-[package.extras]
-all = ["pillow (>=9.1.0)", "pytest", "pytest-cov", "tox", "zest.releaser[recommended]"]
-dev = ["pytest", "pytest-cov", "tox"]
-maintainer = ["zest.releaser[recommended]"]
-pil = ["pillow (>=9.1.0)"]
-test = ["coverage", "pytest"]
 
 [[package]]
 name = "redis"
@@ -1171,4 +1205,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a2b90473b7de8d23d68f2ecede5dd09f128dd7c914b05267d31fad860a6efc87"
+content-hash = "f1f83d948241ecdbf7efe91034ae114500c0d3011b8dbe97c711b8eef8d8e41c"

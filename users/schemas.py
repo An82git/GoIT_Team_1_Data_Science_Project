@@ -1,6 +1,4 @@
-
 from datetime import datetime
-from typing import List, Optional
 from pydantic import Field, BaseModel, EmailStr 
 
 from users import models

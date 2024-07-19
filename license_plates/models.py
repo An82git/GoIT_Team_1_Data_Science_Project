@@ -16,7 +16,7 @@ class LicensePlate(Base, TimestampsMixin):
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     user: Mapped["User"] = relationship(back_populates="license_plates")
     visits: Mapped[List["Visit"]] = relationship(back_populates="license_plate")
-    number: Mapped[int] = mapped_column(String(7))
+    number: Mapped[int] = mapped_column(String(7), unique=True)
     baned: Mapped[bool] = mapped_column(Boolean, default=False)
 
 class Visit(Base):
