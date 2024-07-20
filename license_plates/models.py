@@ -24,5 +24,6 @@ class Visit(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     license_plate_id: Mapped[int] = mapped_column(Integer, ForeignKey("license_plates.id", ondelete="CASCADE"))
     license_plate: Mapped[LicensePlate] = relationship(back_populates="visits")
+    payment: Mapped["Payment"] = relationship(back_populates='visit')
     in_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now(UTC))
     out_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))

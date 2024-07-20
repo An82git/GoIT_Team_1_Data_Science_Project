@@ -22,5 +22,4 @@ CMD \
     cd ./app && \
     poetry run alembic upgrade head && \
     cd .. && \
-    poetry run python ./app/cli.py seed && \
     poetry run python ./app/main.py
