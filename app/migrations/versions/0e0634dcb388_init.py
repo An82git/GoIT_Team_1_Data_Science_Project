@@ -1,8 +1,8 @@
 """init
 
-Revision ID: 81191007028a
+Revision ID: 0e0634dcb388
 Revises: 
-Create Date: 2024-07-19 16:36:09.395107
+Create Date: 2024-07-20 17:13:14.261458
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '81191007028a'
+revision: str = '0e0634dcb388'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -45,7 +45,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('model', sa.String(length=255), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('number', sa.String(length=7), nullable=False),
+    sa.Column('number', sa.String(length=10), nullable=False),
     sa.Column('baned', sa.Boolean(), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
     sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
@@ -66,7 +66,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('license_plate_id', sa.Integer(), nullable=False),
     sa.Column('in_at', sa.DateTime(timezone=True), nullable=False),
-    sa.Column('out_at', sa.DateTime(timezone=True), nullable=False),
+    sa.Column('out_at', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['license_plate_id'], ['license_plates.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )

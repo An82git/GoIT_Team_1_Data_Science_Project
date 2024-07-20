@@ -5,8 +5,8 @@ from pydantic import Field, BaseModel
 
 class LicensePlate(BaseModel):
     model: str = Field(min_length=5, max_length=255)
-    number: str = Field(min_length=3, max_length=7)
-    baned: Optional[str] = Field(False)
+    number: str = Field(min_length=3, max_length=10)
+    baned: Optional[bool] = Field(False)
 
 
 class Visit(BaseModel):
@@ -15,7 +15,6 @@ class Visit(BaseModel):
 
 class VisitResponse(Visit):
     id: int
-    license_plate: "LicensePlateResponse"
 
     class Config:
         from_attributes = True

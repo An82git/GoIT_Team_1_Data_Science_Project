@@ -9,7 +9,7 @@ UsersControllerDep = Annotated[UsersController, Depends(UsersController)]
 SessionControllerDep = Annotated[SessionController, Depends(SessionController)]
 
 async def read_user(user_ident: str | int, db: DBConnectionDep, controller: UsersControllerDep) -> User:
-    user = controller.get_user(user_ident, db)
+    user = await controller.get_user(user_ident, db)
     if user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     return user

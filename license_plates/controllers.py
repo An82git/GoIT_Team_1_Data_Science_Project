@@ -1,7 +1,6 @@
 from fastapi import UploadFile
 from datetime import datetime, UTC
 from typing import List
-from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from license_plates import schemas
 from license_plates.models import LicensePlate, Visit
@@ -22,7 +21,12 @@ class LicensePlateController:
         query = db.query(LicensePlate)
         if user:
             query = query.filter(LicensePlate.user == user)
-        return query.filter(or_(LicensePlate.id == plate_ident, LicensePlate.number == plate_ident)).first()
+        try:
+            plate_ident = int(plate_ident)
+        except:
+            pass
+        query = query.filter(LicensePlate.id == plate_ident) if isinstance(plate_ident, int) else query.filter(LicensePlate.number == plate_ident)
+        return query.first()
 
     async def create(self, body: schemas.LicensePlate, db: Session, user: User) -> LicensePlate:
         plate = LicensePlate(**body.model_dump(), user=user)
@@ -54,7 +58,7 @@ class LicensePlateController:
         if visit:
             payment_controller = PaymentsController()
             visit.out_at = datetime.now(UTC)
-            payment_controller.create_payment(visit, db, user)
+            await payment_controller.create_payment(visit, db, user)
         else:
             visit = Visit(license_plate=plate)
             db.add(visit)
