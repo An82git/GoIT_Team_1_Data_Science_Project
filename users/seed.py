@@ -10,6 +10,7 @@ import csv
 
 # load models
 import license_plates.models
+import paymets.models
 
 fake_data: faker.Faker = faker.Faker()
 
