@@ -57,7 +57,7 @@ async def read_user_by_name_or_id(user: UserDep):
 
 @user_router.post("/{user_ident}/license_plate", response_model=license_plates_schemas.LicensePlateResponse, dependencies=[Depends(auth.role_in([UserRoles.ADMIN.value]))], status_code=status.HTTP_201_CREATED)
 async def create_license_plate(body: license_plates_schemas.LicensePlate, db: DBConnectionDep, controller: LicensePlateControllerDep, user: UserDep):
-    plate = controller.read(body.number, db)
+    plate = await controller.read(body.number, db)
     if plate:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='License plate already exists')
     return await controller.create(body, db, user)

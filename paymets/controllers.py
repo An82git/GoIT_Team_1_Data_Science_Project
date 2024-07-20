@@ -40,6 +40,8 @@ class PaymentsController:
 
     async def calc_price(self, park_time: int, db: Session, previous_price: float = 0.0) -> float:
         price = db.query(Price).order_by(func.abs(Price.hours - park_time)).first()
+        if price is None:
+            return 0
         total_time = park_time // price.hours
         next_price = previous_price + price
         if total_time != 0:
