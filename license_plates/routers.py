@@ -33,7 +33,7 @@ async def read_visits(db: DBConnectionDep, controller: LicensePlateControllerDep
 @visit_router.post('/', response_model=schemas.VisitResponse, status_code=status.HTTP_201_CREATED)
 async def handle_visit(db: DBConnectionDep, controller: LicensePlateControllerDep, user: AuthDep, photo: UploadFile, plate: Optional[str] = Form(None)):
     try:
-        return await controller.handle_visit(photo, plate, db, user)
+        return  controller.handle_visit(photo, plate, db, user)
     except PlateNotFoundException:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Plate not found. Please register it.')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Plate not found. Please register it!')
     
