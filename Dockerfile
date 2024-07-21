@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-base-ubuntu22.04
+FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 
 ENV APP_HOME=/project \
     POETRY_VERSION=1.7.1 
@@ -29,8 +29,9 @@ RUN pip install "poetry==$POETRY_VERSION"
 RUN pip config set global.timeout 1000 && \
     pip config set global.retries 10
 
-RUN pip install nvidia-cufft-cu12 --timeout=300 --retries=10
-RUN pip install triton --timeout=300 --retries=10
+RUN pip install nvidia-curand-cu12==10.3.2.106 --timeout=300 --retries=10
+RUN pip install nvidia-cufft-cu12==11.0.2.54 --timeout=300 --retries=10
+RUN pip install triton==2.3.1 --timeout=300 --retries=10
 
 RUN poetry env use python3.11 && poetry cache clear . --all && poetry install --no-root
 
