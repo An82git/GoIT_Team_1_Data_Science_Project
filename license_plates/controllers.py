@@ -51,17 +51,18 @@ class LicensePlateController:
         return db.query(Visit).filter(Visit.license_plate == plate).all()
     
     async def handle_visit(self, photo: UploadFile | None, plate: str | None, db: Session, user: User) -> Visit:
-        # plate_number = plate #or photo # тут потрібно буде витягнути номерний знак з фото
+        plate_number = plate #or photo # тут потрібно буде витягнути номерний знак з фото
         if photo:
             plate_number = await self.extract_plate_number(photo)
         # if plate_number is None:
         #     raise PlateNotFoundException
+
         print(plate_number)
         plate = await self.read(plate_number, db)
         
         if plate is None:
             raise PlateNotFoundException
-        visit = await db.query(Visit).filter(Visit.license_plate == plate, Visit.out_at == None).first()
+        visit =  db.query(Visit).filter(Visit.license_plate == plate, Visit.out_at == None).first()
         if visit:
             payment_controller = PaymentsController()
             visit.out_at = datetime.now(UTC)

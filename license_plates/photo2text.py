@@ -74,7 +74,7 @@ def read_text(image_path):
                 for res in result:
                     if len(res[1]) > 3:
                         text_without_spaces = res[1].replace(" ", "")
-                        print("Розпізнаний текст:", text_without_spaces.upper())
+                        # print("Розпізнаний текст:", text_without_spaces.upper())
                         return text_without_spaces.upper()
 
                     
