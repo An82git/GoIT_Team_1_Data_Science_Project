@@ -22,7 +22,10 @@ RUN apt-get update && apt-get install -y \
     && apt-get install -y python3.11 python3.11-dev python3.11-venv python3-pip \
     && apt-get install -y postgresql-client libpq-dev \
     && apt-get install -y gcc g++ \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y \
+    && apt-get install -y libgl1 \
+    && rm -rf /var/lib/apt/lists/* 
+
 
 RUN pip install "poetry==$POETRY_VERSION"
 

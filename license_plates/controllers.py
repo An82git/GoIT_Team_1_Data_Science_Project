@@ -6,7 +6,7 @@ from license_plates import schemas
 from license_plates.models import LicensePlate, Visit
 from users.models import User
 from paymets.controllers import PaymentsController
-from license_plates  import photo2text
+from license_plates.photo2text import read_text
 import shutil
 class PlateNotFoundException(Exception):
     pass
@@ -53,7 +53,7 @@ class LicensePlateController:
     async def handle_visit(self, photo: UploadFile | None, plate: str | None, db: Session, user: User) -> Visit:
         # plate_number = plate #or photo # тут потрібно буде витягнути номерний знак з фото
         if photo:
-            plate_number =  self.extract_plate_number(photo)
+            plate_number = await self.extract_plate_number(photo)
         # if plate_number is None:
         #     raise PlateNotFoundException
         print(plate_number)
@@ -61,7 +61,7 @@ class LicensePlateController:
         
         if plate is None:
             raise PlateNotFoundException
-        visit = db.query(Visit).filter(Visit.license_plate == plate, Visit.out_at == None).first()
+        visit = await db.query(Visit).filter(Visit.license_plate == plate, Visit.out_at == None).first()
         if visit:
             payment_controller = PaymentsController()
             visit.out_at = datetime.now(UTC)
@@ -74,13 +74,12 @@ class LicensePlateController:
         return visit
 
 
-
     async def extract_plate_number(self, photo: UploadFile) -> str:
         # Збережіть тимчасовий файл
         temp_file = f"temp_{photo.filename}"
         with open(temp_file, "wb") as buffer:
             shutil.copyfileobj(photo.file, buffer)
 
-            return  photo2text(temp_file)
+            return  read_text(temp_file)
 
 

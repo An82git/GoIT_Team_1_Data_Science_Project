@@ -37,14 +37,11 @@ def read_text(image_path):
     # cv2.imshow('Test', binary)
     # cv2.waitKey()
 
-    # Перетворюємо зображення у відтінки сірого
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
     # Знаходимо контури на зображенні
     contours, _ = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     # Створюємо копію зображення для візуалізації
-    image_copy = image.copy()
+    # image_copy = image.copy()
 
     # Обходимо всі знайдені контури
     for cnt in contours:
