@@ -2,6 +2,7 @@ import cv2
 import easyocr
 import matplotlib.pyplot as plt
 
+
 def read_text(image_path):
     # Ініціалізація EasyOCR
     reader = easyocr.Reader(['uk'])
@@ -79,11 +80,7 @@ def read_text(image_path):
                         print("Розпізнаний текст:", text_without_spaces.upper())
                         return text_without_spaces.upper()
 
-
-
-
-
-
+                    
 
 if __name__ == "__main__":
     read_text('nom\BX7851HX.jpg')

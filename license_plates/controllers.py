@@ -6,7 +6,7 @@ from license_plates import schemas
 from license_plates.models import LicensePlate, Visit
 from users.models import User
 from paymets.controllers import PaymentsController
-import photo2text
+from license_plates  import photo2text
 import shutil
 class PlateNotFoundException(Exception):
     pass
@@ -54,6 +54,8 @@ class LicensePlateController:
         # plate_number = plate #or photo # тут потрібно буде витягнути номерний знак з фото
         if photo:
             plate_number =  self.extract_plate_number(photo)
+        # if plate_number is None:
+        #     raise PlateNotFoundException
         print(plate_number)
         plate = await self.read(plate_number, db)
         

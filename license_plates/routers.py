@@ -35,5 +35,5 @@ async def handle_visit(db: DBConnectionDep, controller: LicensePlateControllerDe
     try:
         return  controller.handle_visit(photo, plate, db, user)
     except PlateNotFoundException:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Plate not found. Please register it!')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Bad photo or Plate not found. Please register it!')
     
