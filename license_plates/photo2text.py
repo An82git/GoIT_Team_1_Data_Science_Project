@@ -55,8 +55,8 @@ def read_text(image_path):
             roi = image[y:y+h, x:x+w]
             
             # Масштабуємо вирізану область
-            # roi_resized = cv2.resize(roi, (85, 20), interpolation=cv2.INTER_NEAREST)
-            roi_resized = cv2.resize(roi, (150, 40), interpolation=cv2.INTER_NEAREST)
+            roi_resized = cv2.resize(roi, (85, 20), interpolation=cv2.INTER_NEAREST)
+            # roi_resized = cv2.resize(roi, (150, 40), interpolation=cv2.INTER_NEAREST)
 
 
             # Відображення зображення за допомогою matplotlib
@@ -78,15 +78,8 @@ def read_text(image_path):
                         return text_without_spaces.upper()
 
                     
-
 if __name__ == "__main__":
     read_text('nom\BX7851HX.jpg')
-
-
-
-
-
-
 
 
 
