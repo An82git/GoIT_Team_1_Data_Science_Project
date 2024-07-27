@@ -1,6 +1,8 @@
+
+import os
 from fastapi import UploadFile
 from datetime import datetime, UTC
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 from license_plates import schemas
 from license_plates.models import LicensePlate, Visit
@@ -50,10 +52,30 @@ class LicensePlateController:
     async def read_visits(self, plate: LicensePlate, db: Session) -> List[Visit]:
         return db.query(Visit).filter(Visit.license_plate == plate).all()
     
-    async def handle_visit(self, photo: UploadFile | None, plate: str | None, db: Session, user: User) -> Visit:
+
+    def extract_plate_number(self, photo: UploadFile) -> str:
+        # Збережіть тимчасовий файл
+        temp_file = f"temp_{photo.filename}"
+        try:
+            with open(temp_file, "wb") as buffer:
+                shutil.copyfileobj(photo.file, buffer)
+            
+            # Використовуйте temp_file для обробки (наприклад, розпізнавання тексту)
+            plate_number = read_text(temp_file)
+        finally:
+            # Видалення тимчасового файлу
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
+
+        return plate_number
+
+
+    async def handle_visit(self, photo: UploadFile | None, plate: str | None, db: Session, user: User) -> Optional[Visit]:
         plate_number = plate #or photo # тут потрібно буде витягнути номерний знак з фото
         if photo:
-            plate_number = await self.extract_plate_number(photo)
+            print("=============")
+            plate_number =  self.extract_plate_number(photo)
+
         if plate_number is None:
             raise PlateNotFoundException
 
@@ -73,14 +95,4 @@ class LicensePlateController:
         db.commit()
         db.refresh(visit)
         return visit
-
-
-    async def extract_plate_number(self, photo: UploadFile) -> str:
-        # Збережіть тимчасовий файл
-        temp_file = f"temp_{photo.filename}"
-        with open(temp_file, "wb") as buffer:
-            shutil.copyfileobj(photo.file, buffer)
-
-            return  read_text(temp_file)
-
 
