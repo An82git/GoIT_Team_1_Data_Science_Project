@@ -10,6 +10,7 @@ from users.models import User
 from paymets.controllers import PaymentsController
 from license_plates.photo2text import read_text
 import shutil
+
 class PlateNotFoundException(Exception):
     pass
 
@@ -73,7 +74,6 @@ class LicensePlateController:
     async def handle_visit(self, photo: UploadFile | None, plate: str | None, db: Session, user: User) -> Optional[Visit]:
         plate_number = plate #or photo # тут потрібно буде витягнути номерний знак з фото
         if photo:
-            print("=============")
             plate_number =  self.extract_plate_number(photo)
 
         if plate_number is None:
@@ -86,6 +86,7 @@ class LicensePlateController:
             raise PlateNotFoundException
         visit =  db.query(Visit).filter(Visit.license_plate == plate, Visit.out_at == None).first()
         if visit:
+            # виїзд
             payment_controller = PaymentsController()
             visit.out_at = datetime.now(UTC)
             await payment_controller.create_payment(visit, db, user)
