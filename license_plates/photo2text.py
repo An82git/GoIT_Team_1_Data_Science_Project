@@ -32,7 +32,7 @@ def read_text(image_path):
     # image = cv2.blur(image, (2, 2))
     # gaus = cv2.GaussianBlur(image, (3, 3), 0)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    binary = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)[1]V, 31, 2)
+    binary = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)[1]
 
     # Відображення зображення за допомогою matplotlib
     # plt.imshow(cv2.cvtColor(binary, cv2.COLOR_BGR2RGB))

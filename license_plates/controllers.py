@@ -79,7 +79,7 @@ class LicensePlateController:
         if plate_number is None:
             raise PlateNotFoundException
 
-        print(plate_number)
+        # print(plate_number)
         plate = await self.read(plate_number, db)
         
         if plate is None:
