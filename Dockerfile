@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+FROM nvidia/cuda:12.5.1-devel-ubuntu22.04
 
 ENV APP_HOME=/project \
     POETRY_VERSION=1.7.1 
