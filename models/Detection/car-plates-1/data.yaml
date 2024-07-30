@@ -1,0 +1,12 @@
+names:
+- plate
+nc: 1
+roboflow:
+  license: CC BY 4.0
+  project: car-plates-l8eqg
+  url: https://universe.roboflow.com/carplates-yrrpx/car-plates-l8eqg/dataset/1
+  version: 1
+  workspace: carplates-yrrpx
+test: ../test/images
+train: train/images
+val: valid/images
