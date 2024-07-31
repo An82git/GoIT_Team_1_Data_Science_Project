@@ -5,13 +5,14 @@ from app.db import DBConnectionDep
 from datetime import datetime, UTC
 from users.routers import session_router, user_router, profile_router
 from license_plates.routers import license_plate_router, visit_router
+from paymets.routers import payments_router
 import uvicorn
 
 app = FastAPI()
 
 base_router = APIRouter(tags=['base'])
 
-routers = [base_router, session_router, profile_router, user_router, license_plate_router, visit_router]
+routers = [base_router, session_router, profile_router, user_router, license_plate_router, visit_router, payments_router]
 
 @base_router.get("/")
 def status(db: DBConnectionDep):
