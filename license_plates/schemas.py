@@ -1,6 +1,5 @@
 from typing import List, Optional
 from datetime import datetime, UTC
-from typing import Optional
 from pydantic import Field, BaseModel
 
 class LicensePlate(BaseModel):
@@ -19,6 +18,11 @@ class VisitResponse(Visit):
     class Config:
         from_attributes = True
 
+class PaymentVisitResponse(VisitResponse):
+    total_cost: float | None
+
+    class Config:
+        from_attributes = True
 
 class LicensePlateResponse(LicensePlate):
     id: int
@@ -26,3 +30,43 @@ class LicensePlateResponse(LicensePlate):
 
     class Config:
         from_attributes = True
+
+
+class ParkingBase(BaseModel):
+    license_plate: str
+    start_time: datetime
+    end_time: datetime
+
+class ParkingResponse(ParkingBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+class RateBase(BaseModel):
+    rate_per_hour: float
+
+class RateResponse(RateBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+class LimitBase(BaseModel):
+    license_plate: str
+    limit_amount: float
+
+class LimitResponse(LimitBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+class TotalCostResponse(BaseModel):
+    license_plate_id: int
+    total_cost: float
+
+class ExceededLimitResponse(BaseModel):
+    license_plate: str
+    total_cost: float
+    limit_amount: float
